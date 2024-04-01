@@ -1,55 +1,22 @@
 <?php
-abstract class HumanAbstract
+
+class Human
 {
-    protected $name;
+    private static $count = 0;
 
-    public function __construct($name) {
-        $this->name = $name;
+
+    public function __construct()
+    {
+        self::$count++;
     }
 
-    public function getName()
+    public static function getCount()
     {
-        return $this->name;
-    }
-
-    abstract public function getGreetings();
-    abstract public function getMyNameIs();
-
-    public function introduceYourself()
-    {
-        return $this->getGreetings() . "! " .$this->getMyNameIs() . " " . $this->getName() . ".";
+        return self::$count;
     }
 }
 
-class RussianHuman extends HumanAbstract
-{
-    public function getGreetings()
-    {
-        return 'Привет';
-    }
-
-    public function getMyNameIs()
-    {
-        return 'Меня зовут';
-    }
-}
-
-class EnglishHuman extends HumanAbstract
-{
-
-    public function getGreetings()
-    {
-        return 'Hello';
-    }
-
-    public function getMyNameIs()
-    {
-        return 'My name is ';
-    }
-}
-
-$russian = new RussianHuman("Олег");
-$english = new EnglishHuman("Oleg");
-
-echo $russian->introduceYourself()."<br>";
-echo $english->introduceYourself()."<br>";
+$human1 = new Human();
+$human2 = new Human();
+$human3 = new Human();
+echo 'Людей уже ' . Human::getCount();
