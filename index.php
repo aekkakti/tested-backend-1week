@@ -9,11 +9,11 @@ $login = getUserLogin();
 </head>
 <body>
 <?php if ($login === null): ?>
-<a href="/login.php">Авторизуйтесь</a>
+    <a href="/login.php">Авторизуйтесь</a>
 <?php else: ?>
-Добро пожаловать, <?= $login ?>
+    Добро пожаловать, <?= $login ?>
 <br>
-<a href="/logout.php">Выйти</a>
+    <a href="/logout.php">Выйти</a>
 <?php endif; ?>
 
 </body>
