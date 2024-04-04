@@ -60,4 +60,16 @@ class ArticlesController
         var_dump($article);
 
     }
+
+    public function delete(int $id)
+    {
+        $article = Article::getById($id);
+        if ($article) {
+            $article->delete();
+            var_dump('Статья удалена');
+        }
+        else {
+            var_dump('Такой статьи не существует');
+        }
+    }
 }
