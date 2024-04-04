@@ -39,4 +39,9 @@ class Db
         }
         return self::$instance;
     }
+
+    public function getLastInsertId(): int
+    {
+        return $this->pdo->lastInsertId();
+    }
 }

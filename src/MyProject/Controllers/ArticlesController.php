@@ -45,4 +45,19 @@ class ArticlesController
 
         $article->save();
     }
+
+    public function add(): void
+    {
+        $author = User::getById(1);
+
+        $article = new Article();
+        $article->setAuthor($author);
+        $article->setName('Новое название статьи');
+        $article->setText('Новый текст статьи');
+
+        $article->save();
+
+        var_dump($article);
+
+    }
 }
