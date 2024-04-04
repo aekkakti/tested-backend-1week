@@ -38,6 +38,24 @@ class Article extends ActiveRecordEntity
         return $this->text;
     }
 
+    /**
+     * @return User
+     */
+    public function getAuthor(): User
+    {
+        return User::getById($this->authorId);
+    }
+
+    public function setName(string $name): string
+    {
+        return $this->name = $name;
+    }
+
+    public function setText(string $text): string
+    {
+        return $this->text = $text;
+    }
+
     protected static function getTableName(): string
     {
         return 'articles';
