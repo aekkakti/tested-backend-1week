@@ -59,7 +59,7 @@ class UsersController extends AbstractController
             try {
                 $user = User::login($_POST);
                 UsersAuthService::createToken($user);
-                header('Location: /');
+                header('Location: /www/');
                 exit();
             }
             catch(InvalidArgumentException $e) {

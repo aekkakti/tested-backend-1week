@@ -2,21 +2,15 @@
 
 namespace MyProject\Controllers;
 
+use MyProject\Exceptions\Forbidden;
+use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Exceptions\NotFoundException;
+use MyProject\Exceptions\UnauthorizedException;
 use MyProject\Models\Articles\Article;
 use MyProject\Models\Users\User;
-use MyProject\Models\Users\UsersAuthService;
-use MyProject\View\View;
 
 class ArticlesController extends AbstractController
 {
-
-    public function __construct()
-    {
-        $this->user = UsersAuthService::getUserByToken();
-        $this->view = new View(__DIR__ . '/../../../templates');
-        $this->view->setVar('user', $this->user);
-    }
 
     public function view(int $articleId)
     {
@@ -32,19 +26,35 @@ class ArticlesController extends AbstractController
         ]);
     }
 
-    public function edit(int $articleId): void
+    public function edit(int $articleId)
     {
-        /** @var Article $article */
         $article = Article::getById($articleId);
 
         if ($article === null) {
             throw new NotFoundException();
         }
 
-        $article->setName('Новое название статьи');
-        $article->setText('Новый текст статьи');
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
 
-        $article->save();
+        if (!$this->user->isAdmin()) {
+            throw new Forbidden('Вы не администратор, для вас недоступно');
+        }
+
+        if (!empty($_POST)) {
+            try {
+                $article->updateFromArray($_POST);
+            } catch (InvalidArgumentException $e) {
+                $this->view->renderHtml('articles/edit.php', ['error' => $e->getMessage(), 'article' => $article]);
+                return;
+            }
+
+            header('Location: /www/articles/' . $article->getId(), true, 302);
+            exit();
+        }
+
+        $this->view->renderHtml('articles/edit.php', ['article' => $article]);
     }
 
     public function add(): void

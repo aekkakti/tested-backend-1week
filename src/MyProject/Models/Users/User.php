@@ -59,6 +59,11 @@ class User extends ActiveRecordEntity
         $this->save();
     }
 
+    public function isAdmin(): string
+    {
+        return $this->role;
+    }
+
    protected static function getTableName(): string
    {
        return 'users';
