@@ -14,4 +14,14 @@
         </td>
     </tr>
     <tr>
+        <td colspan="2" style="text-align: right">
+            <?php
+            if (!empty($user)): ?>
+            Привет, <?= $user->getNickname() ?> | <a href="/www/users/logout">Выйти</a>
+            <?php else: ?>
+            <a href="/www/users/login">Войти</a> | <a href="/www/users/register">Зарегистрироваться</a>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <tr>
         <td>
